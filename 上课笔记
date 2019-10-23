@@ -1,0 +1,113 @@
+﻿GIT简介
+1. 什么是GIT
+git是一个开源的分布式版本控制系统,用于高效的管理各种大小项目和文件。
+2. 代码管理工具的用途
+防止代码丢失,做备份
+项目的版本管理和控制,可以通过设置节点进行跳转
+建立各自的开发环境分支,互不影响,方便合并
+在多终端开发时,方便代码的相互传输
+3. git的特点
+git是开源的,多在*nix下使用,可以管理各种文件
+git是分布式的项目管理工具(svn是集中式的)git数据管理更多样化,分享速度快,数据安全
+git 拥有更好的分支支持,方便多人协调
+4. git安装
+sudo apt-get install git
+GIT使用
+基本概念
+
+工作区:项目所在操作目录,实际操作项目的区域
+暂存区: 用于记录工作区的工作(修改)内容
+仓库区: 用于备份工作区的内容
+远程仓库: 远程主机上的GIT仓库
+注意: 在本地仓库中,git总是希望工作区的内容与仓库区保持一致,而且只有仓库区的内容才能和其他远程仓
+库交互。
+
+初始配置
+配置命令: git config
+配置所有用户: git config --system [选项]
+配置文件位置: /etc/gitconfig
+配置当前用户: git config --global [选项]
+配置文件位置: ~/.gitconfig
+配置当前项目: git config [选项]
+配置文件位置: project/.git/config
+
+1. 配置用户名
+e.g. 将用户名设置为Tedu
+sudo git config --system user.name Tedu
+2. 配置用户邮箱e.g. 将邮箱设置为lvze@tedu.cn
+git config --global user.email lvze@tedu.cn
+3. 配置编译器
+e.g. 配置编译器为pycharm
+git config core.editor pycharm
+4. 查看配置信息
+git config –list
+
+基本命令
+1. 初始化仓库
+git init 意义:将某个项目目录变为git操作目录,生成git本地仓库。即该项目目录可以使用git管理
+ 	git init
+	已初始化空的 Git 仓库于 /home/tarena/1908chenyi/month02—linnux/day17-cy/.git/
+2. 查看本地仓库状态
+git status 说明: 初始化仓库后默认工作在master分支,当工作区与仓库区不一致时会有提示。
+
+ git status
+	位于分支 master
+
+	尚无提交
+
+	未跟踪的文件:
+ 	 （使用 "git add <文件>..." 以包含要提交的内容）
+
+		".~lock.\344\270\212\350\257\276\347\254\224\350\256\260#"
+		"\344\270\212\350\257\276\347\254\224\350\256\260"
+3. 将工作内容记录到暂存区
+git add [files..]
+
+	tarena@tarena:~/1908chenyi/month02—linnux/day17-cy$ git add 上课笔记
+	tarena@tarena:~/1908chenyi/month02—linnux/day17-cy$ git status
+	位于分支 master
+
+	尚无提交
+
+	要提交的变更：
+  	（使用 "git rm --cached <文件>..." 以取消暂存）
+
+		新文件：   "\344\270\212\350\257\276\347\254\224\350\256\260"
+
+	未跟踪的文件:
+  	（使用 "git add <文件>..." 以包含要提交的内容）
+
+		g".~lock.\344\270\212\350\257\276\347\254\224\350\256\260#"
+	
+git add 无法
+
+e.g. 将 a ,b 记录到暂存区
+git add
+a b
+e.g. 将所有文件(不包含隐藏文件)记录到暂存区
+git add
+*
+####@扩展延伸 在Git项目中可以通过在项目的某个文件夹下定义.gitignore文件的方式,规定相应的忽略规则,用
+来管理当前文件夹下的文件的Git提交行为。.gitignore 文件是可以提交到公有仓库中,这就为该项目下的所有开发者
+都共享一套定义好的忽略规则。在.gitignore 文件中,遵循相应的语法,在每一行指定一个忽略规则。
+.gitignore忽略规则简单说明
+file 表示忽略file文件
+*.a 表示忽略所有 .a 结尾的文件
+!lib.a 表示但lib.a除外
+build/ 表示忽略 build/目录下的所有文件,过滤整个build文件夹;
+4.取消文件暂存记录
+git rm --cached [file]
+5. 将文件同步到本地仓库
+git commit [file] -m [message] 说明: -m表示添加一些同步信息,表达同步内容e.g.
+将暂存区所有记录同步到仓库区
+git commit
+-m 'add files'
+6. 查看commit 日志记录
+git log git log --pretty=oneline
+7. 比较工作区文件和仓库文件差异
+git diff [file]
+8. 将暂存区或者某个commit点文件恢复到工作区
+git checkout [commit] -- [file]
+--是为了防止误操作,checkout还有切换分支的作用
+9. 移动或者删除文件
+git mv [file] [path] git rm [files] 注意: 这两个操作会修改工作区内容,同时将操作记录提交到暂存区。
